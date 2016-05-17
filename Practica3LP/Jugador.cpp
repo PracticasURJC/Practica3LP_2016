@@ -42,7 +42,8 @@ void Jugador::MoverCasillas(uint32 numCasillas)
 // Mueve al jugador a la siguiente oca
 void Jugador::MoverSiguienteOca()
 {
-    m_casillaActual += DISTANCIA_ENTRE_OCAS;
+    // Mueve 4 o 5 casillas, en funcion de la oca en la que se cae
+    m_casillaActual += (m_casillaActual % DISTANCIA_ENTRE_OCAS) == 0 ? 5 : 4;
     DEBUG_LOG("Jugador %s movido a la casilla %u por caer en una Oca.\n", ToString().c_str(), m_casillaActual);
 }
 

@@ -32,44 +32,49 @@ void Casilla::JugadorEnCasilla(Jugador* jugador)
 
 void Casilla::ManejarCasilla(Jugador* jugador)
 {
-    switch (m_id)
-    {
+    if (m_id >= CASILLA_FINAL)
+        return;
+
     // Mueve al jugador hacia la siguiente oca
-    case CASILLA_OCA_1:
-    case CASILLA_OCA_2:
+    if (m_id % DISTANCIA_ENTRE_OCAS == CASILLA_OCA_1 || m_id % DISTANCIA_ENTRE_OCAS == 0)
+    {
         jugador->MoverSiguienteOca();
-        break;
-    // Mueve al jugador hacia el otro extremo del puente, hacia adelante o hacia atras
-    case CASILLA_PUENTE_1:
-    case CASILLA_PUENTE_2:
-        jugador->MoverCasillaLink();
-        break;
-    // Mueve al jugador hacia la otra casilla de dados, permitiendole tirar otra vez al llegar
-    case CASILLA_DADO_1:
-    case CASILLA_DADO_2:
-        jugador->MoverCasillaLink(true);
-        break;
-    // Penaliza al jugador 2 turnos sin tirar
-    case CASILLA_POSADA:
-    case CASILLA_POZO:
-        jugador->Penalizar(PENALIZACION_POSADA_POZO);
-        break;
-    // Mueve al jugador hacia la casilla 30
-    case CASILLA_LABERINTO:
-        jugador->MoverLaberinto();
-        break;
-    // Penaliza al jugador 3 turnos sin tirar
-    case CASILLA_CARCEL:
-        jugador->Penalizar(PENALIZACION_CARCEL);
-        break;
-    // Mueve al jugador a la casilla de inicio
-    case CASILLA_CALAVERA:
-        jugador->VolverInicio();
-        break;
-    // Caso standard
-    case CASILLA_FINAL:
-    default:
-        break;
+    }
+    else
+    {
+        switch (m_id)
+        {
+        // Mueve al jugador hacia el otro extremo del puente, hacia adelante o hacia atras
+        case CASILLA_PUENTE_1:
+        case CASILLA_PUENTE_2:
+            jugador->MoverCasillaLink();
+            break;
+        // Mueve al jugador hacia la otra casilla de dados, permitiendole tirar otra vez al llegar
+        case CASILLA_DADO_1:
+        case CASILLA_DADO_2:
+            jugador->MoverCasillaLink(true);
+            break;
+        // Penaliza al jugador 2 turnos sin tirar
+        case CASILLA_POSADA:
+        case CASILLA_POZO:
+            jugador->Penalizar(PENALIZACION_POSADA_POZO);
+            break;
+        // Mueve al jugador hacia la casilla 30
+        case CASILLA_LABERINTO:
+            jugador->MoverLaberinto();
+            break;
+        // Penaliza al jugador 3 turnos sin tirar
+        case CASILLA_CARCEL:
+            jugador->Penalizar(PENALIZACION_CARCEL);
+            break;
+        // Mueve al jugador a la casilla de inicio
+        case CASILLA_CALAVERA:
+            jugador->VolverInicio();
+            break;
+        // Caso standard
+        default:
+            break;
+        }
     }
 }
 
